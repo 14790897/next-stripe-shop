@@ -109,7 +109,7 @@ function Footer() {
       </div>
       <div className='border-t border-zinc-800 py-6 text-center'>
         <span className='text-neutral4 text-xs'>
-          Copyright {new Date().getFullYear()} © UPDATE_THIS_WITH_YOUR_APP_DISPLAY_NAME
+          Copyright {new Date().getFullYear()} © Chat API
         </span>
       </div>
     </footer>
