@@ -91,7 +91,7 @@ export function PricingCard({
                 className='w-full'
                 onClick={() => createCheckoutAction({ price: currentPrice })}
               >
-                Get Started
+                Get Started for low price
               </Button>
             )}
             {!currentPrice && (
