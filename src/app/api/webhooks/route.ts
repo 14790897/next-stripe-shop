@@ -5,6 +5,8 @@ import { upsertPrice } from '@/features/pricing/controllers/upsert-price';
 import { upsertProduct } from '@/features/pricing/controllers/upsert-product';
 import { stripeAdmin } from '@/libs/stripe/stripe-admin';
 import { getEnvVar } from '@/utils/get-env-var';
+import PaymentSuccess from '@/features/emails/paymentsuccess';
+import { resendClient } from '@/libs/resend/resend-client';
 
 const relevantEvents = new Set([
   'product.created',
@@ -60,6 +62,13 @@ export async function POST(req: Request) {
               subscriptionId: subscriptionId as string,
               customerId: checkoutSession.customer as string,
               isCreateAction: true,
+            });
+            const userEmail = checkoutSession.customer_details?.email!;
+            resendClient.emails.send({
+              from: 'onboarding@resend.dev',
+              to: userEmail,
+              subject: 'Welcome!',
+              react: PaymentSuccess,
             });
           }
           break;
