@@ -13,7 +13,7 @@ export async function createCheckoutAction({ price }: { price: Price }) {
   const session = await getSession();
 
   if (!session?.user) {
-    return redirect(`${getURL()}/signup`);
+    return redirect(`${getURL()}/signup`); //这里有点问题
   }
 
   if (!session.user.email) {
