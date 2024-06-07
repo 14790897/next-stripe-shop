@@ -106,7 +106,7 @@ You did it! You should be able to look in your Stripe dashboard and see your pro
 1. We haven't configured auth providers, so for now click `Continue with Email` and submit your email address
 1. Click the link sent to your email and you should be redirected back to your app - authenticated
 1. Click `Get Started` on one of the plans. This will take you to a Stripe checkout page (In test mode)
-1. Enter `4242424242424242` as your credit card number. Fill out the rest of the form with any valid data and click Subscribe
+1. Enter `[4242424242424242](https://buy.paperai.life/signup)` as your credit card number. Fill out the rest of the form with any valid data and click Subscribe
 1. You should be redirect to the Account page where you can see your active subscription
 1. Click the `Manage your subscription` button
 

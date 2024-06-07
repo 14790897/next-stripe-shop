@@ -25,8 +25,8 @@ export function PaymentSuccess() {
                 Thanks for buying.
               </Heading>
               <Text className='my-6 text-[16px]'>Here is your pictures.</Text>
-              <Link className='text-center text-xs text-white underline' href={imageUrl}>
-                enjoy
+              <Link className='text-center text-xs text-black underline' href={imageUrl}>
+                enjoy(click me)
               </Link>
               <Button href={baseUrl + '/dashboard'} className='rounded-md bg-black px-4 py-2 font-medium text-white'>
                 Dashboard

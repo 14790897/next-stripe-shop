@@ -64,13 +64,49 @@ export async function POST(req: Request) {
               customerId: checkoutSession.customer as string,
               isCreateAction: true,
             });
-            const userEmail = checkoutSession.customer_details?.email!;
-            resendClient.emails.send({
-              from: 'onboarding@resend.dev',
-              to: userEmail,
-              subject: 'Welcome!',
-              react: React.createElement(PaymentSuccess),
-            });
+            const userEmail = checkoutSession.customer_details?.email;
+            if (!userEmail) {
+              console.error('User email is missing in the checkout session.');
+              return Response.json('User email is missing in the checkout session.', { status: 400 });
+            }
+            console.log('subscription success, useremail:', userEmail);
+
+            try {
+              const emailResponse = await resendClient.emails.send({
+                from: 'team@paperai.life',
+                to: userEmail,
+                subject: 'Welcome!',
+                react: React.createElement(PaymentSuccess),
+              });
+              console.log('Email sent successfully:', emailResponse);
+            } catch (emailError) {
+              console.error('Failed to send email:', emailError);
+              return Response.json('Failed to send email.', { status: 500 });
+            }
+          } else if (checkoutSession.mode === 'payment') {
+            // 处理一次性购买逻辑
+            const paymentIntentId = checkoutSession.payment_intent;
+            const userEmail = checkoutSession.customer_details?.email;
+            if (!userEmail) {
+              console.error('User email is missing in the checkout session.');
+              return Response.json('User email is missing in the checkout session.', { status: 400 });
+            }
+            console.log('useremail:', userEmail)
+            // 更新订单状态或其他相关逻辑
+            console.log('Payment succeeded! PaymentIntent ID:', paymentIntentId);
+
+            try {
+              const emailResponse = await resendClient.emails.send({
+                from: 'team@paperai.life',
+                to: userEmail,
+                subject: 'Thank you for your purchase!',
+                react: React.createElement(PaymentSuccess),
+              });
+              console.log('Email sent successfully:', emailResponse);
+            } catch (emailError) {
+              console.error('Failed to send email:', emailError);
+              return Response.json('Failed to send email.', { status: 500 });
+            }
           }
           break;
         default:
