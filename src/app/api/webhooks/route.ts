@@ -1,12 +1,13 @@
+import React from 'react';
 import Stripe from 'stripe';
 
 import { upsertUserSubscription } from '@/features/account/controllers/upsert-user-subscription';
+import PaymentSuccess from '@/features/emails/paymentsuccess';
 import { upsertPrice } from '@/features/pricing/controllers/upsert-price';
 import { upsertProduct } from '@/features/pricing/controllers/upsert-product';
+import { resendClient } from '@/libs/resend/resend-client';
 import { stripeAdmin } from '@/libs/stripe/stripe-admin';
 import { getEnvVar } from '@/utils/get-env-var';
-import PaymentSuccess from '@/features/emails/paymentsuccess';
-import { resendClient } from '@/libs/resend/resend-client';
 
 const relevantEvents = new Set([
   'product.created',
@@ -68,7 +69,7 @@ export async function POST(req: Request) {
               from: 'onboarding@resend.dev',
               to: userEmail,
               subject: 'Welcome!',
-              react: PaymentSuccess,
+              react: React.createElement(PaymentSuccess),
             });
           }
           break;
